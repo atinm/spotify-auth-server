@@ -26,9 +26,11 @@ var (
 	ch             = make(chan *spotify.Client)
 	certificate    = "cert.pem"
 	key            = "key.pem"
+	port           = "5009"
 )
 
 func completeAuth(w http.ResponseWriter, r *http.Request) {
+	log.Print("[DEBUG] Received callback")
 	state := r.FormValue("state")
 	tok, err := auth.Token(state, r)
 	if err != nil {
@@ -76,6 +78,9 @@ func main() {
 		if config.KeyFile != "" {
 			key = config.KeyFile
 		}
+		if config.Port != "" {
+			port = config.Port
+		}
 	}
 
 	router := mux.NewRouter()
@@ -86,5 +91,6 @@ func main() {
 		auth.SetAuthInfo(config.ClientID, config.ClientSecret)
 	}
 
-	log.Fatal(http.ListenAndServeTLS(":5009", certificate, key, router))
+	log.Printf("[DEBUG] listening on %s", ":"+port)
+	log.Fatal(http.ListenAndServeTLS(":"+port, certificate, key, router))
 }

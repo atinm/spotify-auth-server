@@ -13,4 +13,5 @@ type Config struct {
 	CertificateFile string            `json:"cert"`
 	KeyFile         string            `json:"key"`
 	LogLevel        logutils.LogLevel `json:"log_level"`
+	Port            string            `json:"port"`
 }
