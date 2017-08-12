@@ -2,13 +2,13 @@
 
 The Spotify oauth2 authorization flow requires both the client id and client secret.
 As we need to keep the client secret secure, we need a server to manage the fetching
-of access_token, refresh_token on behalf of the [spotify-filter|https://github.com/atinm/spotify-filter]
+of access_token, refresh_token on behalf of the [spotify-filter](https://github.com/atinm/spotify-filter)
 application. This is the authorization flow server code for handling the code to token exchange on behalf
 of the spotify-filter application.
 
 # Building and Running
 
-Start by registering your application at [Spotify Application Registration|https://developer.spotify.com/my-applications/].
+Start by registering your application at [Spotify Application Registration](https://developer.spotify.com/my-applications/).
 
 Set the Redirect URI to be `http://localhost:5009/callback` (this can be changed if you intend
 to run the server at a different address in the config.json file described later) which is the port
