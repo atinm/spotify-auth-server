@@ -2,8 +2,8 @@
 
 The Spotify oauth2 authorization flow requires both the client id and client secret.
 As we need to keep the client secret secure, we need a server to manage the fetching
-of access_token, refresh_token on behalf of the spotify-filter application. This is
-the authorization flow server code for handling the code to token exchange on behalf
+of access_token, refresh_token on behalf of the spotify-filter (`https://github.com/atinm/spotify-filter`)
+application. This is the authorization flow server code for handling the code to token exchange on behalf
 of the spotify-filter application.
 
 # Building and Running
