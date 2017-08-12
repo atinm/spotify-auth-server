@@ -19,7 +19,10 @@ and secret key for your application.
 
 Export the `SPOTIFY_ID` and `SPOTIFY_SECRET` environment variables set to the client id and
 client secret you created above at application registration to make them available to the program
-(or you can use the configration file `config.json` to save it as described under the Configuration section):
+(or you can use the configration file `config.json` to save it as described under the Configuration section).
+
+The server uses HTTPS, therefore you need to provide a cert.pem and key.pem for it to work. You can generate
+these using the generate_cert program in crypto/tls.
 
     go get github.com/atinm/spotify-auth-server
     go build
@@ -40,5 +43,8 @@ You may have a config.json file in the same directory as the program:
         "client_id": "<the client id from the Spotify application registration>,
         "client_secret": "<the client secret from the Spotify application registration>,
         "log_level": "DEBUG|INFO|WARN(default)|ERROR",
-        "redirect_uri": "<the redirect uri where this server runs - default https://localhost:5009/callback>"
+        "application_uri": "<the uri where the application is listening runs - default https://localhost:5007/callback>",
+        "my_uri":  "<the uri where this server is listening - default https://localhost:5009/callback>",
+        "cert": "cert.pem",
+        "key": "key.pem"
     }

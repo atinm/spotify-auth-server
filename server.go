@@ -13,19 +13,19 @@ import (
 	"github.com/zmb3/spotify"
 )
 
-// redirectURI is the application's uri where the final token is sent
-const redirectURI = "http://localhost:5007/callback?"
-
-// myURI is the OAuth redirect URI for the application.
-// You must register an application at Spotify's developer portal
-// and enter this value.
-const myURI = "http://localhost:5009/callback"
-
 var (
 	config Config
 	client *spotify.Client
-	auth   = spotify.NewAuthenticator(myURI, spotify.ScopeUserReadCurrentlyPlaying, spotify.ScopeUserReadPlaybackState, spotify.ScopeUserModifyPlaybackState)
-	ch     = make(chan *spotify.Client)
+	// myURI is the OAuth redirect URI for the application.
+	// You must register an application at Spotify's developer portal
+	// and enter this value.
+	myURI = "https://localhost:5009/callback"
+	// applicationURI is the application's uri where the final token is sent
+	applicationURI = "https://localhost:5007/callback"
+	auth           spotify.Authenticator
+	ch             = make(chan *spotify.Client)
+	certificate    = "cert.pem"
+	key            = "key.pem"
 )
 
 func completeAuth(w http.ResponseWriter, r *http.Request) {
@@ -39,7 +39,7 @@ func completeAuth(w http.ResponseWriter, r *http.Request) {
 	// "token_type":"Bearer"
 	// "refresh_token":"AQDMcU9J_7SVspLyXXvn-HvgW-Ust2tGr2Wep4OU1bxbJHg9KCTrc9X2SCbQJsidn2Ye5SG9SXPPD4QF1c3rQggvD6_u_AGM891mBxnYXGgo3jBnAgwPBBL-eXUIM79FlIQ"
 	// "expiry":"2017-08-11T21:21:40.806561311-04:00"
-	http.Redirect(w, r, redirectURI+fmt.Sprintf("access_token=%s&token_type=%s&refresh_token=%s&expiry=%d&state=%s", tok.AccessToken, tok.TokenType, tok.RefreshToken, int(time.Until(tok.Expiry).Seconds()), state), 302)
+	http.Redirect(w, r, applicationURI+fmt.Sprintf("?access_token=%s&token_type=%s&refresh_token=%s&expiry=%d&state=%s", tok.AccessToken, tok.TokenType, tok.RefreshToken, int(time.Until(tok.Expiry).Seconds()), state), 302)
 }
 
 func main() {
@@ -64,15 +64,27 @@ func main() {
 		if config.LogLevel != "" {
 			logFilter.SetMinLevel(config.LogLevel)
 		}
+		if config.ApplicationURI != "" {
+			applicationURI = config.ApplicationURI
+		}
+		if config.MyURI != "" {
+			myURI = config.MyURI
+		}
+		if config.CertificateFile != "" {
+			certificate = config.CertificateFile
+		}
+		if config.KeyFile != "" {
+			key = config.KeyFile
+		}
 	}
 
 	router := mux.NewRouter()
 
 	router.HandleFunc("/callback", completeAuth).Methods("GET")
-
+	auth = spotify.NewAuthenticator(myURI)
 	if config.ClientID != "" && config.ClientSecret != "" {
 		auth.SetAuthInfo(config.ClientID, config.ClientSecret)
 	}
 
-	log.Fatal(http.ListenAndServe(":5009", router))
+	log.Fatal(http.ListenAndServeTLS(":5009", certificate, key, router))
 }
