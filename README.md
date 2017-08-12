@@ -20,7 +20,7 @@ client secret you created above at application registration to make them availab
 (or you can use the configration file `config.json` to save it as described under the Configuration section).
 
 The server uses HTTPS, therefore you need to provide a cert.pem and key.pem for it to work. You can generate
-these using the generate_cert program in crypto/tls.
+these using the [generate_cert program in crypto/tls](https://golang.org/src/crypto/tls/generate_cert.go).
 
     go get github.com/atinm/spotify-auth-server
     go build
