@@ -3,3 +3,4 @@ spotify-auth-server
 *.pem
 *~
 vendor/*/*
+.env

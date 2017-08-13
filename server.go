@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -24,9 +23,10 @@ var (
 	applicationURI = "https://localhost:5007/callback"
 	auth           spotify.Authenticator
 	ch             = make(chan *spotify.Client)
-	certificate    = "cert.pem"
-	key            = "key.pem"
-	port           = "5009"
+	// certificate    = "cert.pem"
+	// key            = "key.pem"
+	port      = "5009"
+	logFilter *logutils.LevelFilter
 )
 
 func completeAuth(w http.ResponseWriter, r *http.Request) {
@@ -45,43 +45,14 @@ func completeAuth(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	logFilter := &logutils.LevelFilter{
+	logFilter = &logutils.LevelFilter{
 		Levels:   []logutils.LogLevel{"DEBUG", "INFO", "WARN", "ERROR"},
 		MinLevel: logutils.LogLevel("WARN"),
 		Writer:   os.Stderr,
 	}
 	log.SetOutput(logFilter)
 
-	conf, err := os.Open("config.json")
-	if err != nil {
-		log.Print("[DEBUG] No config file specified, ignoring.")
-	} else {
-		defer conf.Close()
-
-		decoder := json.NewDecoder(conf)
-		err = decoder.Decode(&config)
-		if err != nil {
-			log.Fatalf("Config file 'config.json could not be read, %v", err)
-		}
-		if config.LogLevel != "" {
-			logFilter.SetMinLevel(config.LogLevel)
-		}
-		if config.ApplicationURI != "" {
-			applicationURI = config.ApplicationURI
-		}
-		if config.MyURI != "" {
-			myURI = config.MyURI
-		}
-		if config.CertificateFile != "" {
-			certificate = config.CertificateFile
-		}
-		if config.KeyFile != "" {
-			key = config.KeyFile
-		}
-		if config.Port != "" {
-			port = config.Port
-		}
-	}
+	LoadConfig()
 
 	router := mux.NewRouter()
 
@@ -92,5 +63,6 @@ func main() {
 	}
 
 	log.Printf("[DEBUG] listening on %s", ":"+port)
-	log.Fatal(http.ListenAndServeTLS(":"+port, certificate, key, router))
+	// log.Fatal(http.ListenAndServeTLS(":"+port, certificate, key, router))
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }
