@@ -18,7 +18,7 @@ var (
 	// myURI is the OAuth redirect URI for the application.
 	// You must register an application at Spotify's developer portal
 	// and enter this value.
-	myURI = "https://localhost:5009/callback"
+	baseURI = "https://localhost"
 	// applicationURI is the application's uri where the final token is sent
 	applicationURI = "https://localhost:5007/callback"
 	auth           spotify.Authenticator
@@ -57,7 +57,7 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/callback", completeAuth).Methods("GET")
-	auth = spotify.NewAuthenticator(myURI)
+	auth = spotify.NewAuthenticator(baseURI + ":" + port + "/callback")
 	if config.ClientID != "" && config.ClientSecret != "" {
 		auth.SetAuthInfo(config.ClientID, config.ClientSecret)
 	}

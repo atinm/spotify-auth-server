@@ -13,7 +13,7 @@ type Config struct {
 	ClientID        string            `json:"client_id"`
 	ClientSecret    string            `json:"client_secret"`
 	ApplicationURI  string            `json:"application_uri"`
-	MyURI           string            `json:"my_uri"`
+	BaseURI         string            `json:"base_uri"`
 	CertificateFile string            `json:"cert"`
 	KeyFile         string            `json:"key"`
 	LogLevel        logutils.LogLevel `json:"log_level"`
@@ -31,8 +31,8 @@ func LoadConfig() {
 		if os.Getenv("APPLICATION_URI") != "" {
 			applicationURI = os.Getenv("APPLICATION_URI")
 		}
-		if os.Getenv("MY_URI") != "" {
-			myURI = os.Getenv("MY_URI")
+		if os.Getenv("BASE_URI") != "" {
+			baseURI = os.Getenv("BASE_URI")
 		}
 		// if os.Getenv("CERTIFICATE") != "" {
 		// 	certificate = os.Getenv("CERTIFICATE")
@@ -57,8 +57,8 @@ func LoadConfig() {
 		if config.ApplicationURI != "" {
 			applicationURI = config.ApplicationURI
 		}
-		if config.MyURI != "" {
-			myURI = config.MyURI
+		if config.BaseURI != "" {
+			baseURI = config.BaseURI
 		}
 		// if config.CertificateFile != "" {
 		// 	certificate = config.CertificateFile
