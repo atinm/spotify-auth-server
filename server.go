@@ -57,12 +57,12 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/callback", completeAuth).Methods("GET")
-	auth = spotify.NewAuthenticator(baseURI + ":" + port + "/callback")
+	auth = spotify.NewAuthenticator(baseURI + "/callback")
 	if config.ClientID != "" && config.ClientSecret != "" {
 		auth.SetAuthInfo(config.ClientID, config.ClientSecret)
 	}
 
-	log.Printf("[DEBUG] listening on %s", baseURI+":"+port+"/callback")
+	log.Printf("[DEBUG] listening on %s", baseURI+"/callback")
 	// log.Fatal(http.ListenAndServeTLS(":"+port, certificate, key, router))
 	log.Fatal(http.ListenAndServe(":"+port, router))
 }
