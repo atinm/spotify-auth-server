@@ -1,111 +1,114 @@
 {
-	"comment": "",
-	"ignore": "test",
-	"package": [
-		{
-			"path": "appengine",
-			"revision": ""
-		},
-		{
-			"path": "appengine_internal",
-			"revision": ""
-		},
-		{
-			"path": "appengine_internal/base",
-			"revision": ""
-		},
-		{
-			"path": "github.com/atinm/spotify-auth-server",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "yqF125xVSkmfLpIVGrLlfE05IUk=",
-			"path": "github.com/golang/protobuf/proto",
-			"revision": "1909bc2f63dc92bb931deace8b8312c4db72d12f",
-			"revisionTime": "2017-08-08T02:16:21Z"
-		},
-		{
-			"path": "github.com/gorilla/context",
-			"revision": ""
-		},
-		{
-			"path": "github.com/gorilla/mux",
-			"revision": ""
-		},
-		{
-			"path": "github.com/hashicorp/logutils",
-			"revision": ""
-		},
-		{
-			"path": "github.com/zmb3/spotify",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "dr5+PfIRzXeN+l1VG+s0lea9qz8=",
-			"path": "golang.org/x/net/context",
-			"revision": "1c05540f6879653db88113bc4a2b70aec4bd491f",
-			"revisionTime": "2017-08-04T00:04:37Z"
-		},
-		{
-			"checksumSHA1": "WHc3uByvGaMcnSoI21fhzYgbOgg=",
-			"path": "golang.org/x/net/context/ctxhttp",
-			"revision": "1c05540f6879653db88113bc4a2b70aec4bd491f",
-			"revisionTime": "2017-08-04T00:04:37Z"
-		},
-		{
-			"checksumSHA1": "/F4kBHR/0qnLRJgjKqlUo3Iksds=",
-			"path": "golang.org/x/oauth2",
-			"revision": "9a379c6b3e95a790ffc43293c2a78dee0d7b6e20",
-			"revisionTime": "2017-07-25T16:55:14Z"
-		},
-		{
-			"checksumSHA1": "eztsaK5Uim4juQOtqUf6VF+foD4=",
-			"path": "golang.org/x/oauth2/internal",
-			"revision": "9a379c6b3e95a790ffc43293c2a78dee0d7b6e20",
-			"revisionTime": "2017-07-25T16:55:14Z"
-		},
-		{
-			"checksumSHA1": "4o2JkeR2LyUfZ7BQIzHUejyqKno=",
-			"path": "google.golang.org/appengine/internal",
-			"revision": "c5a90ac045b779001847fec87403f5cba090deae",
-			"revisionTime": "2017-08-01T18:31:37Z"
-		},
-		{
-			"checksumSHA1": "TsNO8P0xUlLNyh3Ic/tzSp/fDWM=",
-			"path": "google.golang.org/appengine/internal/base",
-			"revision": "c5a90ac045b779001847fec87403f5cba090deae",
-			"revisionTime": "2017-08-01T18:31:37Z"
-		},
-		{
-			"checksumSHA1": "5QsV5oLGSfKZqTCVXP6NRz5T4Tw=",
-			"path": "google.golang.org/appengine/internal/datastore",
-			"revision": "c5a90ac045b779001847fec87403f5cba090deae",
-			"revisionTime": "2017-08-01T18:31:37Z"
-		},
-		{
-			"checksumSHA1": "Gep2T9zmVYV8qZfK2gu3zrmG6QE=",
-			"path": "google.golang.org/appengine/internal/log",
-			"revision": "c5a90ac045b779001847fec87403f5cba090deae",
-			"revisionTime": "2017-08-01T18:31:37Z"
-		},
-		{
-			"checksumSHA1": "a1XY7rz3BieOVqVI2Et6rKiwQCk=",
-			"path": "google.golang.org/appengine/internal/remote_api",
-			"revision": "c5a90ac045b779001847fec87403f5cba090deae",
-			"revisionTime": "2017-08-01T18:31:37Z"
-		},
-		{
-			"checksumSHA1": "QtAbHtHmDzcf6vOV9eqlCpKgjiw=",
-			"path": "google.golang.org/appengine/internal/urlfetch",
-			"revision": "c5a90ac045b779001847fec87403f5cba090deae",
-			"revisionTime": "2017-08-01T18:31:37Z"
-		},
-		{
-			"checksumSHA1": "akOV9pYnCbcPA8wJUutSQVibdyg=",
-			"path": "google.golang.org/appengine/urlfetch",
-			"revision": "c5a90ac045b779001847fec87403f5cba090deae",
-			"revisionTime": "2017-08-01T18:31:37Z"
-		}
-	],
-	"rootPath": "github.com/atinm/spotify-auth-server"
+    "comment": "",
+    "ignore": "test",
+    "package": [
+	{
+	    "path": "appengine",
+	    "revision": ""
+	},
+	{
+	    "path": "appengine_internal",
+	    "revision": ""
+	},
+	{
+	    "path": "appengine_internal/base",
+	    "revision": ""
+	},
+	{
+	    "path": "github.com/atinm/spotify-auth-server",
+	    "revision": ""
+	},
+	{
+	    "checksumSHA1": "yqF125xVSkmfLpIVGrLlfE05IUk=",
+	    "path": "github.com/golang/protobuf/proto",
+	    "revision": "1909bc2f63dc92bb931deace8b8312c4db72d12f",
+	    "revisionTime": "2017-08-08T02:16:21Z"
+	},
+	{
+	    "path": "github.com/gorilla/context",
+	    "revision": ""
+	},
+	{
+	    "path": "github.com/gorilla/mux",
+	    "revision": ""
+	},
+	{
+	    "path": "github.com/hashicorp/logutils",
+	    "revision": ""
+	},
+	{
+	    "path": "github.com/zmb3/spotify",
+	    "revision": ""
+	},
+	{
+	    "checksumSHA1": "dr5+PfIRzXeN+l1VG+s0lea9qz8=",
+	    "path": "golang.org/x/net/context",
+	    "revision": "1c05540f6879653db88113bc4a2b70aec4bd491f",
+	    "revisionTime": "2017-08-04T00:04:37Z"
+	},
+	{
+	    "checksumSHA1": "WHc3uByvGaMcnSoI21fhzYgbOgg=",
+	    "path": "golang.org/x/net/context/ctxhttp",
+	    "revision": "1c05540f6879653db88113bc4a2b70aec4bd491f",
+	    "revisionTime": "2017-08-04T00:04:37Z"
+	},
+	{
+	    "checksumSHA1": "/F4kBHR/0qnLRJgjKqlUo3Iksds=",
+	    "path": "golang.org/x/oauth2",
+	    "revision": "9a379c6b3e95a790ffc43293c2a78dee0d7b6e20",
+	    "revisionTime": "2017-07-25T16:55:14Z"
+	},
+	{
+	    "checksumSHA1": "eztsaK5Uim4juQOtqUf6VF+foD4=",
+	    "path": "golang.org/x/oauth2/internal",
+	    "revision": "9a379c6b3e95a790ffc43293c2a78dee0d7b6e20",
+	    "revisionTime": "2017-07-25T16:55:14Z"
+	},
+	{
+	    "checksumSHA1": "4o2JkeR2LyUfZ7BQIzHUejyqKno=",
+	    "path": "google.golang.org/appengine/internal",
+	    "revision": "c5a90ac045b779001847fec87403f5cba090deae",
+	    "revisionTime": "2017-08-01T18:31:37Z"
+	},
+	{
+	    "checksumSHA1": "TsNO8P0xUlLNyh3Ic/tzSp/fDWM=",
+	    "path": "google.golang.org/appengine/internal/base",
+	    "revision": "c5a90ac045b779001847fec87403f5cba090deae",
+	    "revisionTime": "2017-08-01T18:31:37Z"
+	},
+	{
+	    "checksumSHA1": "5QsV5oLGSfKZqTCVXP6NRz5T4Tw=",
+	    "path": "google.golang.org/appengine/internal/datastore",
+	    "revision": "c5a90ac045b779001847fec87403f5cba090deae",
+	    "revisionTime": "2017-08-01T18:31:37Z"
+	},
+	{
+	    "checksumSHA1": "Gep2T9zmVYV8qZfK2gu3zrmG6QE=",
+	    "path": "google.golang.org/appengine/internal/log",
+	    "revision": "c5a90ac045b779001847fec87403f5cba090deae",
+	    "revisionTime": "2017-08-01T18:31:37Z"
+	},
+	{
+	    "checksumSHA1": "a1XY7rz3BieOVqVI2Et6rKiwQCk=",
+	    "path": "google.golang.org/appengine/internal/remote_api",
+	    "revision": "c5a90ac045b779001847fec87403f5cba090deae",
+	    "revisionTime": "2017-08-01T18:31:37Z"
+	},
+	{
+	    "checksumSHA1": "QtAbHtHmDzcf6vOV9eqlCpKgjiw=",
+	    "path": "google.golang.org/appengine/internal/urlfetch",
+	    "revision": "c5a90ac045b779001847fec87403f5cba090deae",
+	    "revisionTime": "2017-08-01T18:31:37Z"
+	},
+	{
+	    "checksumSHA1": "akOV9pYnCbcPA8wJUutSQVibdyg=",
+	    "path": "google.golang.org/appengine/urlfetch",
+	    "revision": "c5a90ac045b779001847fec87403f5cba090deae",
+	    "revisionTime": "2017-08-01T18:31:37Z"
+	}
+    ],
+    "rootPath": "github.com/atinm/spotify-auth-server",
+    "heroku": {
+        "goVersion": "go1.8"
+    }
 }
