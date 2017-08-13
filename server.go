@@ -62,7 +62,7 @@ func main() {
 		auth.SetAuthInfo(config.ClientID, config.ClientSecret)
 	}
 
-	log.Printf("[DEBUG] listening on %s", baseURI+"/callback")
+	log.Printf("[DEBUG] listening on %s, with internal port %s", baseURI+"/callback", port)
 	// log.Fatal(http.ListenAndServeTLS(":"+port, certificate, key, router))
 	log.Fatal(http.ListenAndServe(":"+port, router))
 }
