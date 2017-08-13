@@ -2,3 +2,4 @@ config.json
 spotify-auth-server
 *.pem
 *~
+vendor/*/*
