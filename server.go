@@ -54,8 +54,12 @@ func completeAuth(w http.ResponseWriter, r *http.Request) {
 func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
 	log.Print("[DEBUG] Received refreshToken request")
 	clientId, clientSecret, ok := r.BasicAuth()
-	if !ok || clientId != config.ClientID || clientSecret != "" {
-		http.Error(w, "Couldn't get refresh token", http.StatusBadRequest)
+	if !ok {
+		http.Error(w, "Couldn't get basicAuth", http.StatusForbidden)
+		return
+	}
+	if clientId != config.ClientID || clientSecret != "" {
+		http.Error(w, "Couldn't get refresh token: clientId("+clientId+"), clientSecret("+clientSecret+")", http.StatusBadRequest)
 		return
 	}
 	req, err := http.NewRequest("POST", spotifyTokenURL, strings.NewReader(r.Form.Encode()))
