@@ -22,7 +22,7 @@ var (
 	// You must register an application at Spotify's developer portal
 	// and enter this value.
 	baseURI = "https://localhost"
-	// applicationURI is the application's uri where the final token is sent
+	// applicationURI is the application's uri where the final token is sent, complete
 	applicationURI = "https://localhost:5007/complete"
 	// TokenURL is the URL to the Spotify Accounts Service's OAuth2
 	// token endpoint.
