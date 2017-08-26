@@ -23,7 +23,7 @@ var (
 	// and enter this value.
 	baseURI = "https://localhost"
 	// applicationURI is the application's uri where the final token is sent
-	applicationURI = "https://localhost:5007/callback"
+	applicationURI = "https://localhost:5007/complete"
 	// TokenURL is the URL to the Spotify Accounts Service's OAuth2
 	// token endpoint.
 	spotifyTokenURL = "https://accounts.spotify.com/api/token"
