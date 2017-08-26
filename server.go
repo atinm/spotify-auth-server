@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"strings"
 	"time"
@@ -58,11 +59,17 @@ func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Couldn't get basicAuth", http.StatusForbidden)
 		return
 	}
+
 	if clientId != config.ClientID || clientSecret != "" {
 		http.Error(w, "Couldn't get refresh token: clientId("+clientId+") != "+config.ClientID+", clientSecret("+clientSecret+") != \"\"", http.StatusBadRequest)
 		return
 	}
-	req, err := http.NewRequest("POST", spotifyTokenURL, strings.NewReader(r.Form.Encode()))
+	form := url.Values{
+		"grant_type":    {r.FormValue("grant_type")},
+		"refresh_token": {r.FormValue("refresh_token")},
+	}
+
+	req, err := http.NewRequest("POST", spotifyTokenURL, strings.NewReader(form.Encode()))
 	if err != nil {
 		http.Error(w, "Couldn't get refresh token", http.StatusBadRequest)
 		return

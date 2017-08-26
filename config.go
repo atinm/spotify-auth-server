@@ -45,6 +45,7 @@ func LoadConfig() {
 		}
 		config.ClientID = os.Getenv("SPOTIFY_ID")
 		config.ClientSecret = os.Getenv("SPOTIFY_SECRET")
+
 	} else {
 		defer conf.Close()
 
