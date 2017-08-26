@@ -18,6 +18,12 @@
 			"revision": ""
 		},
 		{
+			"checksumSHA1": "sPT0RQ0wtEM1EfzqLC4OODFC9pc=",
+			"path": "github.com/atinm/spotify",
+			"revision": "60d16e8b321261f7f5c8828a56e4433babfd6431",
+			"revisionTime": "2017-08-26T11:49:15Z"
+		},
+		{
 			"path": "github.com/atinm/spotify-auth-server",
 			"revision": ""
 		},
@@ -42,12 +48,6 @@
 			"path": "github.com/hashicorp/logutils",
 			"revision": "0dc08b1671f34c4250ce212759ebd880f743d883",
 			"revisionTime": "2015-06-09T07:04:31Z"
-		},
-		{
-			"checksumSHA1": "CYm9cwALqHTS2LR74cRMmn0FamE=",
-			"path": "github.com/zmb3/spotify",
-			"revision": "69bbd6f6bcb82bd559809be400df6477eff6d482",
-			"revisionTime": "2017-07-28T00:17:40Z"
 		},
 		{
 			"checksumSHA1": "dr5+PfIRzXeN+l1VG+s0lea9qz8=",
