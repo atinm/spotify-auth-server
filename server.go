@@ -47,7 +47,9 @@ func completeAuth(w http.ResponseWriter, r *http.Request) {
 	// "token_type":"Bearer"
 	// "refresh_token":"AQDMcU9J_7SVspLyXXvn-HvgW-Ust2tGr2Wep4OU1bxbJHg9KCTrc9X2SCbQJsidn2Ye5SG9SXPPD4QF1c3rQggvD6_u_AGM891mBxnYXGgo3jBnAgwPBBL-eXUIM79FlIQ"
 	// "expiry":"2017-08-11T21:21:40.806561311-04:00"
-	http.Redirect(w, r, applicationURI+fmt.Sprintf("?access_token=%s&token_type=%s&refresh_token=%s&expiry=%d&state=%s", tok.AccessToken, tok.TokenType, tok.RefreshToken, int(time.Until(tok.Expiry).Seconds()), state), 302)
+	redirect := applicationURI + fmt.Sprintf("?access_token=%s&token_type=%s&refresh_token=%s&expiry=%d&state=%s", tok.AccessToken, tok.TokenType, tok.RefreshToken, int(time.Until(tok.Expiry).Seconds()), state)
+	log.Print("[DEBUG] ", redirect)
+	http.Redirect(w, r, redirect, 302)
 }
 
 func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
