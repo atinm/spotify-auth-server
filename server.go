@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"net/url"
 	"os"
 	"strings"
 	"time"
@@ -54,19 +53,12 @@ func completeAuth(w http.ResponseWriter, r *http.Request) {
 
 func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
 	log.Print("[DEBUG] Received refreshToken request")
-	refreshToken := r.FormValue("refresh_token")
-	grantType := r.FormValue("grant_type")
 	clientId, clientSecret, ok := r.BasicAuth()
 	if !ok || clientId != config.ClientID || clientSecret != "" {
 		http.Error(w, "Couldn't get refresh token", http.StatusBadRequest)
 		return
 	}
-	form := url.Values{
-		"grant_type":    {grantType},
-		"refresh_token": {refreshToken},
-	}
-
-	req, err := http.NewRequest("POST", spotifyTokenURL, strings.NewReader(form.Encode()))
+	req, err := http.NewRequest("POST", spotifyTokenURL, strings.NewReader(r.Form.Encode()))
 	if err != nil {
 		http.Error(w, "Couldn't get refresh token", http.StatusBadRequest)
 		return
@@ -82,7 +74,7 @@ func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		http.Error(w, "Couldn't get refresh token", resp.StatusCode)
+		http.Error(w, "Couldn't get read response", resp.StatusCode)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
