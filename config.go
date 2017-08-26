@@ -43,6 +43,8 @@ func LoadConfig() {
 		if os.Getenv("PORT") != "" {
 			port = os.Getenv("PORT")
 		}
+		config.ClientID = os.Getenv("SPOTIFY_ID")
+		config.ClientSecret = os.Getenv("SPOTIFY_SECRET")
 	} else {
 		defer conf.Close()
 

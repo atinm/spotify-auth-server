@@ -59,7 +59,7 @@ func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if clientId != config.ClientID || clientSecret != "" {
-		http.Error(w, "Couldn't get refresh token: clientId("+clientId+"), clientSecret("+clientSecret+")", http.StatusBadRequest)
+		http.Error(w, "Couldn't get refresh token: clientId("+clientId+") != "+config.ClientID+", clientSecret("+clientSecret+") != \"\"", http.StatusBadRequest)
 		return
 	}
 	req, err := http.NewRequest("POST", spotifyTokenURL, strings.NewReader(r.Form.Encode()))
