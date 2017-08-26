@@ -2,14 +2,17 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
+	"strings"
 	"time"
 
+	"github.com/atinm/spotify"
 	"github.com/gorilla/mux"
 	"github.com/hashicorp/logutils"
-	"github.com/zmb3/spotify"
 )
 
 var (
@@ -21,8 +24,11 @@ var (
 	baseURI = "https://localhost"
 	// applicationURI is the application's uri where the final token is sent
 	applicationURI = "https://localhost:5007/callback"
-	auth           spotify.Authenticator
-	ch             = make(chan *spotify.Client)
+	// TokenURL is the URL to the Spotify Accounts Service's OAuth2
+	// token endpoint.
+	spotifyTokenURL = "https://accounts.spotify.com/api/token"
+	auth            spotify.Authenticator
+	ch              = make(chan *spotify.Client)
 	// certificate    = "cert.pem"
 	// key            = "key.pem"
 	port      = "5009"
@@ -35,13 +41,51 @@ func completeAuth(w http.ResponseWriter, r *http.Request) {
 	tok, err := auth.Token(state, r)
 	if err != nil {
 		http.Error(w, "Couldn't get token", http.StatusForbidden)
-		log.Fatal(err)
+		return
 	}
 	// "access_token":"BQAyVReY-wxNd3K2kKLuMntyArFsRLoW6ahCMh_BphpojTFZe_EbW4t9bUWgQIRr5mFKhdODqXL_pA6uIhGKOae3aKllzpQVA0H7RlCumaN2NJAaSmw7y13fTRwEnLyNIyp9HMuMx7b2Y2ze6aM"
 	// "token_type":"Bearer"
 	// "refresh_token":"AQDMcU9J_7SVspLyXXvn-HvgW-Ust2tGr2Wep4OU1bxbJHg9KCTrc9X2SCbQJsidn2Ye5SG9SXPPD4QF1c3rQggvD6_u_AGM891mBxnYXGgo3jBnAgwPBBL-eXUIM79FlIQ"
 	// "expiry":"2017-08-11T21:21:40.806561311-04:00"
 	http.Redirect(w, r, applicationURI+fmt.Sprintf("?access_token=%s&token_type=%s&refresh_token=%s&expiry=%d&state=%s", tok.AccessToken, tok.TokenType, tok.RefreshToken, int(time.Until(tok.Expiry).Seconds()), state), 302)
+}
+
+func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
+	log.Print("[DEBUG] Received refreshToken request")
+	refreshToken := r.FormValue("refresh_token")
+	grantType := r.FormValue("grant_type")
+	clientId, clientSecret, ok := r.BasicAuth()
+	if !ok || clientId != config.ClientID || clientSecret != "" {
+		http.Error(w, "Couldn't get refresh token", http.StatusBadRequest)
+		return
+	}
+	form := url.Values{
+		"grant_type":    {grantType},
+		"refresh_token": {refreshToken},
+	}
+
+	req, err := http.NewRequest("POST", spotifyTokenURL, strings.NewReader(form.Encode()))
+	if err != nil {
+		http.Error(w, "Couldn't get refresh token", http.StatusBadRequest)
+		return
+	}
+	req.SetBasicAuth(config.ClientID, config.ClientSecret)
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		http.Error(w, "Couldn't get refresh token", resp.StatusCode)
+		return
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		http.Error(w, "Couldn't get refresh token", resp.StatusCode)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(body)
 }
 
 func main() {
@@ -61,6 +105,8 @@ func main() {
 	if config.ClientID != "" && config.ClientSecret != "" {
 		auth.SetAuthInfo(config.ClientID, config.ClientSecret)
 	}
+
+	router.HandleFunc("/token", refreshTokenReq).Methods("POST")
 
 	log.Printf("[DEBUG] listening on %s, with internal port %s", baseURI+"/callback", port)
 	// log.Fatal(http.ListenAndServeTLS(":"+port, certificate, key, router))
