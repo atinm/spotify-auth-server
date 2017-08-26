@@ -79,16 +79,18 @@ func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
+		log.Print("[ERROR] Request failed.")
 		http.Error(w, "Couldn't get refresh token", resp.StatusCode)
 		return
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
+		log.Print("[ERROR] Request failed, could not read response.")
 		http.Error(w, "Couldn't get read response", resp.StatusCode)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", resp.Header.Get("Content-Type"))
 	w.WriteHeader(http.StatusOK)
 	w.Write(body)
 }
