@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -78,10 +77,12 @@ func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	req.SetBasicAuth(config.ClientID, config.ClientSecret)
-	b := config.ClientID + ":" + config.ClientSecret
-	enc := base64.StdEncoding.EncodeToString([]byte(b))
-	req.Header.Set("Authorization", "Basic "+enc)
-	log.Printf("[DEBUG] Set (%s) Header Authorization: %s", b, req.Header.Get("Authorization"))
+	id, secret, ok := req.BasicAuth()
+	if id != config.ClientID || secret != config.ClientSecret || !ok {
+		log.Printf("[ERROR] %s != %s || %s != %s || %v", id, config.ClientID, secret, config.ClientSecret, ok)
+	} else {
+		log.Printf("[DEBUG] Set (%s:%s) Header Authorization: %s", config.ClientID, config.ClientSecret, req.Header.Get("Authorization"))
+	}
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
