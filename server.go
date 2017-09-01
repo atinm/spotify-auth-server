@@ -29,10 +29,10 @@ var (
 	spotifyTokenURL = "https://accounts.spotify.com/api/token"
 	auth            spotify.Authenticator
 	ch              = make(chan *spotify.Client)
-	// certificate    = "cert.pem"
-	// key            = "key.pem"
-	port      = "5009"
-	logFilter *logutils.LevelFilter
+	certificate     = "cert.pem"
+	key             = "key.pem"
+	port            = "5009"
+	logFilter       *logutils.LevelFilter
 )
 
 func completeAuth(w http.ResponseWriter, r *http.Request) {
@@ -40,6 +40,7 @@ func completeAuth(w http.ResponseWriter, r *http.Request) {
 	state := r.FormValue("state")
 	tok, err := auth.Token(state, r)
 	if err != nil {
+		log.Printf("[ERROR] %v", err)
 		http.Error(w, "Couldn't get token", http.StatusForbidden)
 		return
 	}
@@ -71,6 +72,7 @@ func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
 
 	req, err := http.NewRequest("POST", spotifyTokenURL, strings.NewReader(form.Encode()))
 	if err != nil {
+		log.Printf("[ERROR] Request failed: %v", err)
 		http.Error(w, "Couldn't get refresh token", http.StatusBadRequest)
 		return
 	}
@@ -79,14 +81,14 @@ func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Print("[ERROR] Request failed.")
+		log.Printf("[ERROR] Request failed: %v", err)
 		http.Error(w, "Couldn't get refresh token", resp.StatusCode)
 		return
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Print("[ERROR] Request failed, could not read response.")
+		log.Printf("[ERROR] Request failed, could not read response: %v", err)
 		http.Error(w, "Couldn't get read response", resp.StatusCode)
 		return
 	}
@@ -116,6 +118,6 @@ func main() {
 	router.HandleFunc("/token", refreshTokenReq).Methods("POST")
 
 	log.Printf("[DEBUG] listening on %s, with internal port %s", baseURI+"/callback", port)
-	// log.Fatal(http.ListenAndServeTLS(":"+port, certificate, key, router))
+	//log.Fatal(http.ListenAndServeTLS(":"+port, certificate, key, router))
 	log.Fatal(http.ListenAndServe(":"+port, router))
 }
