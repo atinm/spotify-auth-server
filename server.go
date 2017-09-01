@@ -77,6 +77,7 @@ func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	req.SetBasicAuth(config.ClientID, config.ClientSecret)
+	log.Printf("[DEBUG] Set (%s:%s) Header Authorization: %s", config.ClientID, config.ClientSecret, req.Header.Get("Authorization"))
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
