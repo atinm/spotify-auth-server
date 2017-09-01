@@ -83,6 +83,7 @@ func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
 	} else {
 		log.Printf("[DEBUG] Set (%s:%s) Header Authorization: %s", config.ClientID, config.ClientSecret, req.Header.Get("Authorization"))
 	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
