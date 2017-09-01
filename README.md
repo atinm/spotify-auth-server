@@ -33,6 +33,10 @@ to it. The redirected request will contain the code and state that were generate
 your application and the server will exchange the code for an access_token and refresh_token that will be sent back
 to the spotify-filter application.
 
+The server also expects requests for refresh tokens to arrive at the /token endpoint that it will forward to
+the spotify token endpoint after filling in the client_secret as the spotify-filter application does not contain
+the client secret. The server gets the refresh token in the response and sends that back as the response to the client.
+
 # Configuration
 
 You may have a config.json file in the same directory as the program:
@@ -42,7 +46,7 @@ You may have a config.json file in the same directory as the program:
         "client_secret": "<the client secret from the Spotify application registration>,
         "log_level": "DEBUG|INFO|WARN(default)|ERROR",
         "application_uri": "<the uri where the application is listening runs - default https://localhost:5007/callback>",
-        "my_uri":  "<the uri where this server is listening - default https://localhost:5009/callback>",
+        "base_uri":  "<the uri where this server is listening - default https://localhost:5009>",
         "cert": "cert.pem",
         "key": "key.pem"
     }
