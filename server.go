@@ -68,6 +68,8 @@ func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
 	form := url.Values{
 		"grant_type":    {r.FormValue("grant_type")},
 		"refresh_token": {r.FormValue("refresh_token")},
+		"client_id":     {config.ClientID},
+		"client_secret": {config.ClientSecret},
 	}
 
 	req, err := http.NewRequest("POST", spotifyTokenURL, strings.NewReader(form.Encode()))
@@ -76,8 +78,8 @@ func refreshTokenReq(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Couldn't get refresh token", http.StatusBadRequest)
 		return
 	}
-	req.SetBasicAuth(config.ClientID, config.ClientSecret)
-	log.Printf("[DEBUG] Set (%s:%s) Header Authorization: %s", config.ClientID, config.ClientSecret, req.Header.Get("Authorization"))
+	//req.SetBasicAuth(config.ClientID, config.ClientSecret)
+	//log.Printf("[DEBUG] Set (%s:%s) Header Authorization: %s", config.ClientID, config.ClientSecret, req.Header.Get("Authorization"))
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
